@@ -1,0 +1,57 @@
+<div *ngIf="showATMform">
+  <!-- *ngIf="isLoggedIn; then loggedIn; else loggedOut" -->
+  <h2 class="jumbotron">ATM Page</h2>
+  <form #f="ngForm" (ngSubmit)="onSubmitofATMform(f)">
+    <div class="form-group">
+      <label for="Card Number"> Card Number </label>
+      <input type="text" minlength="16" maxlength="16" id="card_number" class="form-control" ngModel name="card_number" #cnum='ngModel'
+        required placeholder="Please Enter your Card Number" (change)="cardNumberValue(cnum)" 
+        onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'')">
+      <div class="alert alert-danger" *ngIf="cnum.touched && !cnum.valid">
+        <span *ngIf='cnum.errors.required'>Card number is mandatory </span>
+        <span *ngIf='cnum.errors.minlength'>Card number should be {{cnum.errors.minlength.requiredLength}} </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Card_Pin"> Card Pin </label>
+      <input type="text" id="card_pin" minlength="4" maxlength="4" id="card_pin" class="form-control" ngModel name="card_pin" #cpin='ngModel'
+        required placeholder="Please Enter your  Pin" (change)="cardPinValue(cpin)" 
+        onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'')">
+      <div class="alert alert-danger" *ngIf="cpin.touched && !cpin.valid">
+        <span *ngIf='cpin.errors.required'>PIN number is mandatory </span>
+        <span *ngIf='cpin.errors.minlength'>Pin number should be {{cpin.errors.minlength.requiredLength}} </span>
+      </div>
+    </div>
+    <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
+  </form>
+</div>
+
+
+<section *ngIf="showAmount">
+  <h2 class="jumbotron">Withdrawal Page</h2>
+  <form #f="ngForm" (ngSubmit)="onSubmitofAmount(f.value)">
+    <div class="form-group">
+      <label for="Amount"> Enter your amount </label>
+      <input type="number" id="amount" class="form-control" ngModel name="amount" #amt='ngModel' required placeholder="Please Enter Amount"
+        required (change)="amountTowithdrawal(amt)" 
+        onkeydown="if(event.key==='.'){event.preventDefault();}"  oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'')"
+        >
+      <div class="alert alert-danger" *ngIf="amt.touched && !amt.valid">
+        <span *ngIf='amt.errors.required'>Please Enter Amount to Withdrawal </span>
+      </div>
+    </div>
+    <button class="btn btn-primary" [disabled]="!f.valid">Withdrawal</button>
+  </form>
+
+</section>
+
+<div>
+  <div>
+    <h2 *ngIf="showNotes">Withdrawal Amount page</h2>
+    <div>
+      <ul>
+        <li *ngFor="let note of notesCount">{{note.value}} notes of ₹{{note.key}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

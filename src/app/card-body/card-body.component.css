@@ -1,0 +1,8 @@
+.btn{
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.form-control.ng-invalid.ng-touched{
+    border: 2px solid red;
+}
